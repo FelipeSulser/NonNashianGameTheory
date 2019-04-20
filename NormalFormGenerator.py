@@ -9,6 +9,11 @@ import math
 import argparse
 import os
 
+'''
+
+ Public functions used to generate Normal Form Games
+
+'''
 
 def generate_games(num_actions, num_players, duplicates=False, symmetric=False, sample=None):
     if duplicates and symmetric:
@@ -44,6 +49,14 @@ def game_generation(num_actions, num_players, duplicates, symmetric, sample, sav
         else:
             print(game)
         num_games += 1
+
+
+'''
+
+ Private functions used to generate Normal Form Games
+
+'''
+
 
 def __all_possible_games_dup(action_arr):
     '''

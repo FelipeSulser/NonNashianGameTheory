@@ -47,16 +47,19 @@ def hofstader(gameDict):
     gameDict['H'] = hofstader_ix
     return gameDict
 
+
 def pte(gameDict):
     pte_ix = __find_perfectly_transparent_eq(gameDict['y'])
     tupler = [tuple(subl) for subl in pte_ix]
     gameDict['P'] = tupler  
     return gameDict
 
+
 def minimax(gameDict):
     minimax_ix = __minimax_rationalizability(gameDict['y'])
     gameDict['M'] = minimax_ix
     return gameDict
+
 
 def translucent(gameDict):
     translucent_ix = __translucent_equilibrium(gameDict['y'])
@@ -75,6 +78,7 @@ def mpce(gameDict):
     gameDict['MP'] = mpce_ix
     return gameDict
 
+
 def irmme(gameDict):
     minimax(gameDict)
     if "M" not in gameDict:
@@ -85,6 +89,23 @@ def irmme(gameDict):
     res_ix = __individual_after_minimax(game_list, available_states)
     gameDict['C'] = res_ix
     return gameDict
+
+
+def get_equilibria(equilibria, game_list):
+    if equilibria == "N":
+        return __find_nash_eq(game_list)
+    elif equilibria == "R":
+        return __iterated_elim_strictly_dominated_actions(game_list)
+    elif equilibria == "I":
+        return __individually_rational(game_list)
+    elif equilibria == "H":
+        return __find_hofstader_eq(game_list)
+    elif equilibria == "P":
+        return __find_perfectly_transparent_eq(game_list)
+    elif equilibria == "M":
+        return __minimax_rationalizability(game_list)
+
+    raise Exception('Error, equilibria not defined. Try: [nash|rationalizability|individual]')
 
 
 '''
@@ -882,23 +903,6 @@ def __get_game_by_line(filename):
 def __validate_equilibria(equilibria):
     if equilibria == "nash" or equilibria == "rationalizability" or equilibria == "individual" or equilibria == "hofstader" or equilibria == "pte" or equilibria == "minimax":
         return equilibria.title()[0]
-
-    raise Exception('Error, equilibria not defined. Try: [nash|rationalizability|individual]')
-
-
-def get_equilibria(equilibria, game_list):
-    if equilibria == "N":
-        return __find_nash_eq(game_list)
-    elif equilibria == "R":
-        return __iterated_elim_strictly_dominated_actions(game_list)
-    elif equilibria == "I":
-        return __individually_rational(game_list)
-    elif equilibria == "H":
-        return __find_hofstader_eq(game_list)
-    elif equilibria == "P":
-        return __find_perfectly_transparent_eq(game_list)
-    elif equilibria == "M":
-        return __minimax_rationalizability(game_list)
 
     raise Exception('Error, equilibria not defined. Try: [nash|rationalizability|individual]')
 
